@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <title>EDUWIDE Academy | Learning</title>
 
@@ -45,28 +45,15 @@
     </section>
 
     <section id="about" class="container-fluid bg-light">
-        <div class="row align-items-center justify-content-center text-center">
-            <div class="pp col-md-3 d-flex flex-column py-md-0 py-5">
-                <i class="bi bi-journal-bookmark"></i>
-                <span class="lead fs-4">Best Learning Materials</span>
-            </div>
-            <div class="pp col-md-3 d-flex flex-column py-md-0 py-5">
-                <i class="bi bi-people"></i>
-                <span class="lead fs-4">Experienced Tutors</span>
-            </div>
-            <div class="pp col-md-3 d-flex flex-column py-md-0 py-5">
-                <i class="bi bi-question-circle"></i>
-                <span class="lead fs-4">24 X 7 Support</span>
-            </div>
-        </div>
+        <div id="features_api" class="row align-items-center justify-content-center text-center"> </div>
     </section>
 
     <section id="materials" class="container-lg">
         <div class="text-center pb-5">
-            <h3 class="display-6 lead">Choose your favourite Materials</h3>
+            <h3 class="display-6 lead">Follow these modules to understand the basics of web development</h3>
         </div>
-        <div class="row justify-content-center text-center mb-5">
-            <div class="col-md-5">
+        <div class="row justify-content-center text-center">
+            <div class="col-md-5  mb-5">
                 <div class="card">
                     <img src="https://i.pinimg.com/564x/e7/6a/97/e76a971b42bf49fd1db80ea9a1b2b2c3.jpg" class="img-fluid" alt="">
                     <div class="card-body">
@@ -78,7 +65,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-5  mb-5">
                 <div class="card">
                     <img src="https://i.pinimg.com/564x/66/4b/79/664b7983f371b3e3c263cb4cf5e93950.jpg" class="img-fluid" alt="">
                     <div class="card-body">
@@ -92,7 +79,7 @@
             </div>
         </div>
         <div class="row justify-content-center text-center">
-            <div class="col-md-5">
+            <div class="col-md-5  mb-5">
                 <div class="card">
                     <img src="https://i.pinimg.com/564x/f2/5e/fe/f25efe1f74e755c91b6a550fe463bdb3.jpg" class="img-fluid" alt="">
                     <div class="card-body">
@@ -104,7 +91,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-5  mb-5">
                 <div class="card ">
                     <img src="https://i.pinimg.com/564x/56/a9/6e/56a96ea059273ae98af2c12926eb8cbe.jpg" class="img-fluid" alt="">
                     <div class="card-body">
@@ -175,28 +162,40 @@
             <li class="ms-3"><a class="link-dark" href="#"><i class="bi bi-instagram"></i></a></li>
           </ul>
         </div>
-      </footer>
+    </footer>
 
       <script type="text/javascript">
-        var apiUrl = 'http://localhost:1337/home';
+        $(document).ready(()=>{
+
+          var apiUrl = 'https://edumate-api.herokuapp.com/home';
         fetch(apiUrl).then(response => {
           return response.json();
         }).then(data => {
-          document.getElementById("header_api").innerHTML = marked.parse(data.header);
-          document.getElementById("sub_header_api").innerHTML = marked.parse(data.sub_header);
-          console.log(data.features[0]);
+          $("#header_api").html(marked.parse(data.header));
+          $("#sub_header_api").html(marked.parse(data.sub_header));
+          let features = data.features;
+          features.forEach(feature => {
+          document.getElementById("features_api").innerHTML += `
+          <div class="pp col-md-3 d-flex flex-column py-md-0 py-5">
+                ${feature.icon}
+                <span class="lead fs-4">${feature.text}</span>
+            </div>
+          `;
+          });
         }).catch(err => {
           console.log(err);
         });
 
-        var apiCourse = 'http://localhost:1337/courses';
+        var apiCourse = 'https://edumate-api.herokuapp.com/courses';
         fetch(apiCourse).then(response => {
           return response.json();
         }).then(data => {         
-          console.log(data);
+         console.log(data);
+          
         }).catch(err => {
           console.log(err);
         });
+        })
     </script>
 
 
