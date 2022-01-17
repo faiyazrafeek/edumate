@@ -1,5 +1,5 @@
-// const api_base = 'https://edumate-api.herokuapp.com/';
-const api_base = 'http://localhost:1337/';
+const api_base = 'https://edumate-api.herokuapp.com/';
+// const api_base = 'http://localhost:1337/';
 $(document).ready(() => {
     var apiUrl = api_base + 'home';
     fetch(apiUrl).then(response => {
